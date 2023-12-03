@@ -15,7 +15,7 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if(Auth::attempt($validated)){
+        // if(Auth::attempt($validated)){
             $token = auth()->user()->createToken('your-token-name');
 
             return response()->json([
@@ -23,11 +23,11 @@ class AuthController extends Controller
                 'message' => 'Login berhasil',
                 'token' => $token->plainTextToken,
             ]);
-        }
+        // }
 
-        return response()->json([
-            'success' => false,
-            'message' => 'Login gagal',
-        ]);
+        // return response()->json([
+        //     'success' => false,
+        //     'message' => 'Login gagal',
+        // ]);
     }
 }
