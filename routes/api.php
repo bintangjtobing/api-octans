@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriTransaksiController;
 use App\Http\Controllers\TransaksiController;
@@ -51,6 +52,12 @@ Route::middleware('auth:sanctum')->group(function()
         Route::post('kategori-transaksi', 'store');
         Route::put('kategori-transaksi', 'update');
         Route::delete('kategori-transaksi', 'destroy');
+    });
+
+    Route::controller(AnggaranController::class)->group(function()
+    {
+        Route::get('anggran', 'index');
+        Route::post('anggran', 'store');
     });
 });
 
