@@ -11,13 +11,13 @@ class AnggaranController extends Controller
 {
     public function index()
     {
-        $anggran = DatabaseHelper::getPersentaseAnggaran();
+        $anggaran = DatabaseHelper::getPersentaseAnggaran();
 
-        if($anggran){
+        if($anggaran){
             return response()->json([
                 'status' => 200,
                 'message' => 'oke',
-                'data' => $anggran
+                'data' => $anggaran
             ]);
         }else{
             return response()->json([
@@ -45,7 +45,7 @@ class AnggaranController extends Controller
 
         $validate = $request->validate($validateRules);
         $validate['kategori_anggaran_id'] = $kategoriAnggaranId;
-        $validate['user_id'] = auth()->user()->id;
+        $validate['user_id'] = Auth::user()->id;
 
         $createAnggran = Anggaran::create($validate);
 
@@ -58,6 +58,51 @@ class AnggaranController extends Controller
             return response()->json([
                 'status' => 400,
                 'mesage' => 'data gagal ditambah'
+            ]);
+        }
+    }
+
+    public function getAnggaranById(Request $request)
+    {
+        $anggaran = DatabaseHelper::getAnggaran()->where('id', $request->id)->get();
+
+        if($anggaran) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'oke',
+                'data' => $anggaran
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'message' => 'error'
+            ]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $validate = $request->validate([
+            'jumlah' => 'required',
+            'kategori_transaksi_id' => 'required',
+            'kategori_anggaran_id' => 'required',
+        ]);
+
+        $validate['user_id'] = auth()->user()->id;
+
+
+        $updateAnggran = Anggaran::where('id', request()->id)
+                ->update($validate);
+
+        if($updateAnggran) {
+            return response()->json([
+                'status' => 201,
+                'mesage' => 'data berhasil diubah'
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'mesage' => 'data gagal diubah'
             ]);
         }
     }

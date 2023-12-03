@@ -23,12 +23,12 @@ class AuthController extends Controller
                 'message' => 'login berhasil',
                 'token' => $token,
             ]);
-        }else{
-            return response()->json([
-                'succes' => false,
-                'message' => 'login gagal',
-            ]);
         }
+
+        return response()->json([
+            'succes' => false,
+            'message' => 'login gagal',
+        ]);
 
 
     }

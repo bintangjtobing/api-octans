@@ -58,6 +58,8 @@ Route::middleware('auth:sanctum')->group(function()
     {
         Route::get('anggran', 'index');
         Route::post('anggran', 'store');
+        Route::get('anggran-by-id', 'getAnggaranById');
+        Route::put('anggran', 'update');
     });
 });
 
