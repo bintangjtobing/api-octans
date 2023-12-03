@@ -15,21 +15,19 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        // if(Auth::attempt($validated)){
-            // $auth = Auth::user();
-            $token = $request->user()->createToken($request->token_name);
+        if(Auth::attempt($validated)){
+            $token = auth()->user()->createToken('your-token-name');
+
             return response()->json([
-                'succes' => true,
-                'message' => 'login berhasil',
-                'token' => $token,
+                'success' => true,
+                'message' => 'Login berhasil',
+                'token' => $token->plainTextToken,
             ]);
-        // }
+        }
 
-        // return response()->json([
-        //     'succes' => false,
-        //     'message' => 'login gagal',
-        // ]);
-
-
+        return response()->json([
+            'success' => false,
+            'message' => 'Login gagal',
+        ]);
     }
 }
