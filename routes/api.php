@@ -3,9 +3,11 @@
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KategoriTransaksiController;
+use App\Http\Controllers\SuppliersOrCustomersController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
 use App\Models\Transaksi;
+use Illuminate\Contracts\Database\Eloquent\SupportsPartialRelations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,10 +60,20 @@ Route::middleware('auth:sanctum')->group(function()
 
     Route::controller(AnggaranController::class)->group(function()
     {
-        Route::get('anggran', 'index');
-        Route::post('anggran', 'store');
-        Route::get('anggran-by-id', 'getAnggaranById');
-        Route::put('anggran', 'update');
+        Route::get('anggaran', 'index');
+        Route::post('anggaran', 'store');
+        Route::get('anggaran-by-id', 'getAnggaranById');
+        Route::put('anggaran', 'update');
+        Route::delete('anggaran', 'destroy');
+    });
+
+    Route::controller(SuppliersOrCustomersController::class)->group(function()
+    {
+        Route::get('supplier' , 'index');
+        Route::get('supplier-by-id' , 'getSupplierById');
+        Route::post('supplier', 'store');
+        Route::put('supplier', 'update');
+        Route::delete('supplier', 'destroy');
     });
 });
 

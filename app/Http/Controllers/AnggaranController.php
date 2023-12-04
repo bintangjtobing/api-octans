@@ -106,4 +106,21 @@ class AnggaranController extends Controller
             ]);
         }
     }
+
+    public function destroy(Request $request)
+    {
+        $deleteAnggaran = Anggaran::destroy($request->id);
+
+        if($deleteAnggaran) {
+            return response()->json([
+                'status' => 200,
+                'mesage' => 'data berhasil dihapus'
+            ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'mesage' => 'data gagal dihapus'
+            ]);
+        }
+    }
 }
