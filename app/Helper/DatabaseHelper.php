@@ -8,6 +8,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use GuzzleHttp;
 
 class DatabaseHelper
 {
@@ -89,5 +91,45 @@ class DatabaseHelper
 
         return $anggaranDenganPersentase;
 
+    }
+
+    public static function getNextMonth()
+    {
+        App::setLocale('id');
+
+        $date = Carbon::now();
+        $nextMonth = $date->addMonth(); // Mengambil tanggal dan waktu saat ini
+        return $nextMonth->format('Y-m-d H:i:s');
+    }
+
+    public static function getSignature($payload)
+    {
+        $client = new GuzzleHttp\Client();
+        $base_url = env('BASE_URL');
+        $secret_key = env('SECRETKEY_FLIP');
+
+        function getPrivateKey()
+        {
+            $private_key = env('PRIVATKEY_FLIP');
+
+            return $private_key;
+        }
+
+        function generateSignature($payload = [])
+            {
+                openssl_sign(
+                    json_encode($payload),
+                    $generatedSignature,
+                    openssl_pkey_get_private(getPrivateKey()),
+                    'sha256WithRSAEncryption'
+                );
+
+                return base64_encode($generatedSignature);
+            }
+
+        $signature = generateSignature($payload);
+        // $signature_acc_inq = generateSignature($payload_acc_inq);
+
+        return $signature;
     }
 }
