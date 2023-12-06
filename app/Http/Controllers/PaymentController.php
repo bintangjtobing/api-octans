@@ -12,6 +12,8 @@ class PaymentController extends Controller
 {
     public function store(Request $request)
     {
+
+        // return ['tes'];
         $ch = curl_init();
         $secret_key = env('SECRETKEY_FLIP');
         $encoded_auth = base64_encode($secret_key . ":");
@@ -24,7 +26,7 @@ class PaymentController extends Controller
         curl_setopt($ch, CURLOPT_POST, TRUE);
 
         $payloads = [
-            "title" => request()->title,
+            "title" => 'bayar octans',
             "amount" => 10000,
             "type" => "SINGLE",
             "expired_date" => "2023-12-30 15:50",

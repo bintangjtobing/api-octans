@@ -6,6 +6,7 @@ use App\Http\Controllers\FeedbackCenterController;
 use App\Http\Controllers\FeedbackManageController;
 use App\Http\Controllers\InformasiBisnisController;
 use App\Http\Controllers\KategoriTransaksiController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SuppliersOrCustomersController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
@@ -94,6 +95,11 @@ Route::middleware('auth:sanctum')->group(function()
     {
         Route::get('feedback-manage', 'index');
         Route::get('feedback-manage/detail', 'getFeedbackManageById');
+    });
+
+    Route::controller(PaymentController::class)->group(function()
+    {
+        Route::post('create_bill', 'store');
     });
 });
 
