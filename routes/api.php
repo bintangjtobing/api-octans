@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\AnggaranController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FeedbackCenterController;
+use App\Http\Controllers\FeedbackManageController;
+use App\Http\Controllers\InformasiBisnisController;
 use App\Http\Controllers\KategoriTransaksiController;
 use App\Http\Controllers\SuppliersOrCustomersController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\UserController;
-use App\Models\Transaksi;
 use Illuminate\Contracts\Database\Eloquent\SupportsPartialRelations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function()
     {
         Route::get('all-user', 'index');
         Route::get('/user', 'userNow');
+        Route::put('profile', 'updateUserProfile');
     });
 
 
@@ -47,7 +50,7 @@ Route::middleware('auth:sanctum')->group(function()
         Route::post('transaksi', 'store');
         Route::get('transaksi-by-uuid', 'getTransaksiByUuid');
         Route::put('transaksi-update', 'update');
-        Route::get('transaksi-by-month', 'getTransaksiByMonth');
+        Route::get('transaksi-by-month', 'getTransaks`iByMonth');
         Route::get('transaksi-by-jenis-transaksi', 'getTransaksiByJenisTransaksi');
     });
 
@@ -74,6 +77,23 @@ Route::middleware('auth:sanctum')->group(function()
         Route::post('supplier', 'store');
         Route::put('supplier', 'update');
         Route::delete('supplier', 'destroy');
+    });
+
+    Route::controller(InformasiBisnisController::class)->group(function()
+    {
+        Route::get('user/info-bisnis', 'index');
+        Route::post('user/info-bisnis', 'store');
+    });
+
+    Route::controller(FeedbackCenterController::class)->group(function()
+    {
+        Route::post('feedback', 'store');
+    });
+
+    Route::controller(FeedbackManageController::class)->group(function()
+    {
+        Route::get('feedback-manage', 'index');
+        Route::get('feedback-manage/detail', 'getFeedbackManageById');
     });
 });
 
